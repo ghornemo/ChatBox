@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="socket.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <p>Resize this responsive page to see the effect!</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+        <h2>Chat box</h2>
+         <div class="panel panel-default" id="messageBody" style="overflow-y:auto; height: 300px;">
+         <div class="panel-body">Messages go here
+          <ul id="message_list">
+           </ul> 
+         </div>
+         </div>
+    <input type="text" name="user_input" onkeyup="checkMessage(event)" id="user_input" placeholder="Enter Message">
+     <input type="submit" class="button" value="Send" onclick="sendMessage()" onkeyup="checkMessage(event)">
+    </div>
+    <div class="col-sm-4">
+      <h3>Online Users</h3> 
+      <div class="well">Online users go here
+          <ul id="userList">
+              <li>test</li>
+          </ul>
+      </div>
+      <label id="usersOnline">Users online: -</label>
+    </div>
+  </div></div>
+    
+    <input type="button" class="button" value="Logout" onclick="Logout()">
+
+</body>
+</html>
