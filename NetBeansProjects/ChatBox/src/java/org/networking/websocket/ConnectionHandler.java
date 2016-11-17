@@ -60,6 +60,10 @@ import javax.websocket.server.ServerEndpoint;
             if ("login".equals(jsonMessage.getString("action"))) {
                 sessionHandler.addSession(session);
             }
+            
+            if ("history".equals(jsonMessage.getString("action"))) {
+                sessionHandler.userHistory(session);
+            }
 
             if ("message".equals(jsonMessage.getString("action"))) {
                 /*device.setDescription(jsonMessage.getString("description"));

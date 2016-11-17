@@ -17,6 +17,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.spi.JsonProvider;
 import javax.websocket.Session;
+import java.sql.*;
 
 /**
  *
@@ -83,6 +84,7 @@ public class UserManager {
                     .add("message", msg)
                     .build();
             sendToAllConnectedSessions(updateDevMessage);
+            insertDatabase(name, message);
     }
         
     public void loginMessage(int id) {
@@ -155,5 +157,80 @@ public class UserManager {
                 return user;
         return null;
     }
+    
+    public void userHistory(Session session) {
+        String userName = getUserBySession(session).name;
+        String[] messages = retrieveAllMessages(userName);
+        int first = 1;
+        for(String m : messages) {
+            
+                        JsonProvider provider = JsonProvider.provider();
+            JsonObject msg = provider.createObjectBuilder()
+                    .add("action", "history")
+                    .add("message", m)
+                    .add("first", first)
+                    .build();
+            
+            sendToSession(session, msg);
+            first = 0;
+        }
+    }
+    
+    	public static void insertDatabase(String name, String message) {
+      Connection conn = null;
+      try {
+         Class.forName("org.postgresql.Driver");
+         conn = DriverManager
+            .getConnection("jdbc:postgresql://localhost:5432/mydb",
+            "postgres", "gemal");
+      System.out.println("Opened database successfully");
+     //STEP 4: Execute a query
+      System.out.println("Creating statement...");
+      Statement stmt = conn.createStatement();
+      String sql;
+      sql = "insert into messages values ('"+name+"', '"+message+"');";
+      stmt.executeUpdate(sql);
+conn.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+         System.err.println(e.getClass().getName()+": "+e.getMessage());
+      }
+	}
+
+
+	public static String[] retrieveAllMessages(String user) {
+	ArrayList messages = new ArrayList();
+      Connection conn = null;
+      try {
+         Class.forName("org.postgresql.Driver");
+         conn = DriverManager
+            .getConnection("jdbc:postgresql://localhost:5432/mydb",
+            "postgres", "gemal");
+      System.out.println("Opened database successfully");
+     //STEP 4: Execute a query
+      System.out.println("Creating statement...");
+      Statement stmt = conn.createStatement();
+      String sql;
+      sql = "SELECT name, message FROM messages where name = '"+user+"';";
+      ResultSet rs = stmt.executeQuery(sql);
+
+      //STEP 5: Extract data from result set
+      while(rs.next()){
+         //Retrieve by column name
+         String name = rs.getString("name");
+         String message = rs.getString("message");
+
+         //Display values
+         messages.add(name+": " + message);
+	
+}
+conn.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+         System.err.println(e.getClass().getName()+": "+e.getMessage());
+         return null;
+      }
+return (String[]) messages.toArray(new String[messages.size()]);
+	}
     
 }

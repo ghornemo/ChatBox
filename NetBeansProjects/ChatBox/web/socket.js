@@ -1,5 +1,5 @@
 
-var socket = socket = new WebSocket("ws://192.168.2.14:8080/ChatBox/actions");
+var socket = socket = new WebSocket("ws://192.168.2.13:8080/ChatBox/actions");
 socket.onmessage = onMessage;
 var name = localStorage.getItem("username");
 window.onload = login;
@@ -12,6 +12,14 @@ function onMessage(event) {
     }
     if (device.action === "message") {
         addMessage(device.message);
+        //device.parentNode.removeChild(device);
+    }
+        if (device.action === "history") {
+        if(device.first === 1) {
+            Clear();
+        }
+        historyMessage(device.message);
+        //addMessage(device.message);
         //device.parentNode.removeChild(device);
     }
     if (device.action === "userList") {
@@ -58,6 +66,9 @@ function loginNotification(user) {
 function logoutNotification(user) {
     addMessage(user+" has logged out");
 }
+function historyMessage(input) {
+    addMessage(input);
+}
 function addMessage(message) {
   var ul = document.getElementById("message_list");
   var li = document.createElement("li");
@@ -88,9 +99,21 @@ function sendMessage() {
     message.focus();
     };
 }
+    //Clear our message list.
+    function Clear() {
+        document.getElementById("message_list").innerHTML = "";
+    }
+    //Retrieve user message history
+    function History() {
+    var DeviceAction = {
+        action: "history",
+    };
+    socket.send(JSON.stringify(DeviceAction));
+    }
     function login() {
-        window.alert("login packet sent");
     name = localStorage.getItem("username");
+        document.getElementById("nameTag").innerHTML = name;
+        window.alert("login packet sent");
     var DeviceAction = {
         action: "enter",
         name: name

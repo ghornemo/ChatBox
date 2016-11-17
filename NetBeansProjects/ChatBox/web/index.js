@@ -6,7 +6,7 @@
 
 //window.onload = init;
 //window.onload = init;
-var socket = new WebSocket("ws://localhost:8080/ChatBox/login");
+var socket = new WebSocket("ws://192.168.2.13:8080/ChatBox/login");
 socket.onmessage = onMessage;
 
 function onMessage(event) {

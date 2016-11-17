@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Chat Box</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,8 +12,8 @@
 <body>
 
 <div class="jumbotron text-center">
-  <h1>My First Bootstrap Page</h1>
-  <p>Resize this responsive page to see the effect!</p> 
+  <h1>Networking class Chat-box</h1>
+  <p>Welcome to the group chat</p> <p id="nameTag"></p>
 </div>
   
 <div class="container">
@@ -21,17 +21,19 @@
     <div class="col-sm-8">
         <h2>Chat box</h2>
          <div class="panel panel-default" id="messageBody" style="overflow-y:auto; height: 300px;">
-         <div class="panel-body">Messages go here
+         <div class="panel-body">
           <ul id="message_list">
            </ul> 
          </div>
          </div>
     <input type="text" name="user_input" onkeyup="checkMessage(event)" id="user_input" placeholder="Enter Message">
      <input type="submit" class="button" value="Send" onclick="sendMessage()" onkeyup="checkMessage(event)">
+     <input type="button" class="button" value="Clear" onclick="Clear()">
+     <input type="button" class="button" value="History" onclick="History()">
     </div>
     <div class="col-sm-4">
       <h3>Online Users</h3> 
-      <div class="well">Online users go here
+      <div class="well">
           <ul id="userList">
               <li>test</li>
           </ul>
