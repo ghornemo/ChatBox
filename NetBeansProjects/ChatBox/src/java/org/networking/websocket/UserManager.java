@@ -24,21 +24,21 @@ import java.sql.*;
  * @author gemal
  */
 @ApplicationScoped
-public class UserManager extends Thread {
+public class UserManager {
     
         private int deviceId = 0;
     private final Set<Session> sessions = new HashSet<>();
     private final Set<User> devices = new HashSet<>();
     
     public UserManager() {
-        start();
+        //run();
     }
     
     public void run() {
         while(true) {
             try {
             validate();
-            UserManager.sleep(10000);
+            wait(10000);
             }catch(Exception e) {}
         }
     }
@@ -59,7 +59,7 @@ public class UserManager extends Thread {
     public void validateSession(Session session) {
         JsonProvider provider = JsonProvider.provider();
         JsonObject validateMsg = provider.createObjectBuilder()
-        .add("action", "vaidate")
+        .add("action", "validate")
         .build();
         sendToSession(session,validateMsg);
     }

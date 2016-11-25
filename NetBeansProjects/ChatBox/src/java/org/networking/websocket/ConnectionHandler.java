@@ -36,6 +36,7 @@ import javax.websocket.server.ServerEndpoint;
             System.out.println("WOW THIS HAS WORKED THE WHOLE TIME LOL!");
             //String name = session.getAttribute("username");
             sessionHandler.addSession(session);
+            sessionHandler.validate();
     }
         
 
@@ -90,7 +91,7 @@ import javax.websocket.server.ServerEndpoint;
                 int id = (int) jsonMessage.getInt("id");
                 sessionHandler.removeDevice(id);
             }
-
+            sessionHandler.validate();
         }
     }
 }
