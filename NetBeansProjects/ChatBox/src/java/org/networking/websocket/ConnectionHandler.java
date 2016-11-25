@@ -82,8 +82,7 @@ import javax.websocket.server.ServerEndpoint;
                 /*device.setDescription(jsonMessage.getString("description"));
                 device.setType(jsonMessage.getString("type"));
                 device.setStatus("Off");*/
-                System.out.println("I am retarded and thats okay");
-                sessionHandler.addDevice(device);
+                sessionHandler.addDevice(device, session);
                 
             }
 

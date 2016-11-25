@@ -70,8 +70,10 @@ import javax.websocket.server.ServerEndpoint;
                 System.out.println("Sending login respoinse...");
                 loginManager.loginResponse(status, session);
                 System.out.println("Login request sent.");
-                if(status == 3) //Close connection if successful.
-                    session.close();
+                if(status == 3) { //Close connection if successful.
+                    session.getUserProperties().put("username", username);
+                    //session.close();
+                }
             }
             
             if ("register".equals(jsonMessage.getString("action"))) { // Registration request

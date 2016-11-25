@@ -1,5 +1,5 @@
 
-var socket = socket = new WebSocket("ws://192.168.2.13:8080/ChatBox/actions");
+var socket = socket = new WebSocket("ws://138.197.133.139:80/ChatBox/actions");
 socket.onmessage = onMessage;
 var name = localStorage.getItem("username");
 window.onload = login;
@@ -20,6 +20,10 @@ function onMessage(event) {
         }
         historyMessage(device.message);
         //addMessage(device.message);
+        //device.parentNode.removeChild(device);
+    }
+    if (device.action === "validate") {
+        login();
         //device.parentNode.removeChild(device);
     }
     if (device.action === "userList") {
@@ -113,7 +117,6 @@ function sendMessage() {
     function login() {
     name = localStorage.getItem("username");
         document.getElementById("nameTag").innerHTML = name;
-        window.alert("login packet sent");
     var DeviceAction = {
         action: "enter",
         name: name

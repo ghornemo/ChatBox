@@ -39,6 +39,12 @@ public class UserManager {
 
     }
         
+    public boolean validate() {
+            if(sessions.size() == devices.size())
+                return true;
+            return false;
+    }
+        
     public void broadcastLogin(String name) {
         JsonProvider provider = JsonProvider.provider();
         System.out.println("Sending login message to all clients!");
@@ -131,7 +137,8 @@ public class UserManager {
         }
     }
 
-    public void addDevice(User device) {
+    public void addDevice(User device, Session session) {
+        if(getUserBySession(session) != null) return;//Device already exists...
         device.setId(deviceId);
         devices.add(device);
         loginMessage(deviceId);

@@ -73,6 +73,9 @@ public class Login {
     
     public int loginRequest(String name, String pass, Session session) {
         try {
+        File f = new File("users.txt");
+        if(!f.exists())
+            f.createNewFile();
         Scanner s = new Scanner(new File("users.txt"));
         while(s.hasNext()) {
             String[] line = s.nextLine().split(" ");
