@@ -24,11 +24,24 @@ import java.sql.*;
  * @author gemal
  */
 @ApplicationScoped
-public class UserManager {
+public class UserManager extends Thread {
     
         private int deviceId = 0;
     private final Set<Session> sessions = new HashSet<>();
     private final Set<User> devices = new HashSet<>();
+    
+    public UserManager() {
+        start();
+    }
+    
+    public void run() {
+        while(true) {
+            try {
+            validate();
+            UserManager.sleep(10000);
+            }catch(Exception e) {}
+        }
+    }
     
         public void addSession(Session session) {
         sessions.add(session);
@@ -39,10 +52,24 @@ public class UserManager {
 
     }
         
-    public boolean validate() {
+        
+    /*
+    ** Requesting a session validate itself.    
+    */
+    public void validateSession(Session session) {
+        JsonProvider provider = JsonProvider.provider();
+        JsonObject validateMsg = provider.createObjectBuilder()
+        .add("action", "vaidate")
+        .build();
+        sendToSession(session,validateMsg);
+    }
+        
+    public void validate() {
             if(sessions.size() == devices.size())
-                return true;
-            return false;
+                return;
+            for(Session session : sessions)
+                if(getUserBySession(session) == null)
+                    validateSession(session);
     }
         
     public void broadcastLogin(String name) {
